@@ -1,0 +1,11 @@
+body {
+  background-color: #282c34 !important;
+}
+
+.container {
+  color: white !important;
+}
+
+a, .btn-link {
+  color: #61dafb !important;
+}
