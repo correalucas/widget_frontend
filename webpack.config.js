@@ -23,6 +23,9 @@ module.exports = {
   devServer: {
     historyApiFallback: true
   },
+  output: {
+    publicPath: '/'
+  },
   externals: {
     // global app config object
     config: JSON.stringify({

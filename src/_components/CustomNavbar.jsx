@@ -73,9 +73,14 @@ export class CustomNavbar extends Component {
             <Nav className="ml-auto" navbar>
               {
                 localStorage.getItem('auth') ?
-                <NavItem>
-                  <Button color="link" onClick={this.logout}>Logout</Button>
-                </NavItem>
+                <React.Fragment>
+                  <NavItem>
+                    <NavLink href="/myprofile">My profile</NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <Button color="link" onClick={this.logout}>Logout</Button>
+                  </NavItem>
+                </React.Fragment>
                  :
                 <React.Fragment>
                   <NavItem>

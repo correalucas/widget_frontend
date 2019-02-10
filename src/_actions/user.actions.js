@@ -101,17 +101,18 @@ function resetPassword(params) {
 }
 
 function myProfile() {
-  userService.myProfile()
-    .then(
-      user => {
-        dispatch(success(user));
-      },
-      error => {
-        dispatch(failure(error.toString()));
-        dispatch(alertActions.error(error.toString()));
-      }
-    );
-
+  return dispatch => {
+    userService.myProfile()
+      .then(
+        user => {
+          dispatch(success(user));
+        },
+        error => {
+          dispatch(failure(error.toString()));
+          dispatch(alertActions.error(error.toString()));
+        }
+      );
+  }
   function request(user) { return { type: userConstants.MY_PROFILE_REQUEST, user } }
   function success(user) { return { type: userConstants.MY_PROFILE_SUCCESS, user } }
   function failure(error) { return { type: userConstants.MY_PROFILE_FAILURE, error } }

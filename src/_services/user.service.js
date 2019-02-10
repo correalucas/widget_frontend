@@ -72,7 +72,7 @@ function update(params) {
 
 function show(id) {
   axios.defaults.headers.common['Authorization'] = authHeader();
-  return axios.put(`${config.apiUrl}/users/${id}`)
+  return axios.get(`${config.apiUrl}/users/${id}`)
     .catch(handleResponse)
     .then(auth => {
       return auth.data;
