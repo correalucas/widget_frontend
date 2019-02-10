@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import { MyModal } from './MyModal';
 import { LoginPage } from '../LoginPage';
+import { SignupPage } from '../SignupPage';
+import { ResetPasswordPage } from '../ResetPasswordPage';
 import { authActions } from '../_actions';
 
 import {
@@ -33,13 +35,25 @@ export class CustomNavbar extends Component {
     });
   }
 
+  renderLogin = () => {
+    this.setState({ modalTitle: 'Login', bodyContent: <LoginPage renderSignup={this.renderSignup} renderResetPassword={this.renderResetPassword} /> });
+  }
+
   toggleMyModalLogin = () => {
-    this.setState({ modalTitle: 'Login', bodyContent: <LoginPage /> });
+    this.renderLogin();
     this.myModal.current.toggle();
   }
 
-  toggleMyModalRegistration = () => {
-    this.setState({ modalTitle: 'Login', bodyContent: <RegistrationPage /> });
+  renderSignup = () => {
+    this.setState({ modalTitle: 'Registration', bodyContent: <SignupPage renderLogin={this.renderLogin} /> });
+  }
+
+  renderResetPassword = () => {
+    this.setState({ modalTitle: 'Reset Password', bodyContent: <ResetPasswordPage renderLogin={this.renderLogin} /> });
+  }
+
+  toggleMyModalSignup = () => {
+    this.renderSignup();
     this.myModal.current.toggle();
   }
 
@@ -58,14 +72,20 @@ export class CustomNavbar extends Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               {
-                localStorage.getItem('auth') ? '' :
+                localStorage.getItem('auth') ?
                 <NavItem>
-                  <Button color="link" onClick={this.toggleMyModalLogin}>Login</Button>
+                  <Button color="link" onClick={this.logout}>Logout</Button>
                 </NavItem>
+                 :
+                <React.Fragment>
+                  <NavItem>
+                    <Button color="link" onClick={this.toggleMyModalLogin}>Login</Button>
+                  </NavItem>
+                  <NavItem>
+                    <Button color="link" onClick={this.toggleMyModalSignup}>Signup</Button>
+                  </NavItem>
+                </React.Fragment>
               }
-              <NavItem>
-              {localStorage.getItem('auth') ? <Button color="link" onClick={this.logout}>Logout</Button> : '' }
-              </NavItem>
             </Nav>
           </Collapse>
         </Navbar>

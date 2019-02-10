@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Alert } from 'reactstrap';
+import { Alert, Button } from 'reactstrap';
 import { authActions } from '../_actions';
 
 class LoginPage extends Component {
@@ -33,6 +33,16 @@ class LoginPage extends Component {
     dispatch(authActions.login(username, password));
   }
 
+  handleRegister(e) {
+    e.preventDefault();
+    this.props.renderSignup();
+  }
+
+  handleResetPassword(e) {
+    e.preventDefault();
+    this.props.renderResetPassword();
+  }
+
   render() {
     const { alert } = this.props;
     const { username, password, submitted } = this.state;
@@ -50,6 +60,8 @@ class LoginPage extends Component {
           </div>
           <div className="form-group">
             <button className="btn btn-primary">Login</button>
+            <Button onClick={this.handleRegister.bind(this)} color="link">Register</Button>{' | '}
+            <Button onClick={this.handleResetPassword.bind(this)} color="link">Reset password</Button>
           </div>
         </form>
       </div>
@@ -58,8 +70,7 @@ class LoginPage extends Component {
 }
 
 function mapStateToProps(state) {
-  const { alert } = state;
-  return { alert };
+  return state;
 }
 
 const connectedLoginPage = connect(mapStateToProps)(LoginPage);

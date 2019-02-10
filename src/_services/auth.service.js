@@ -13,7 +13,7 @@ function login(username, password) {
     .catch(handleResponse)
     .then(auth => {
       if(auth !== undefined){
-        localStorage.setItem('auth', JSON.stringify(auth.data));
+        localStorage.setItem('auth', JSON.stringify(auth.data.token));
         window.location.reload(true);
         return auth.data;
       }
@@ -21,18 +21,12 @@ function login(username, password) {
 }
 
 function refresh() {
-  let auth = localStorage.getItem('auth');
-
-  const requestOptions = {
-    method: 'POST',
-    headers: authHeader(),
-    body: JSON.stringify({ refresh_token: auth.token.refresh_token })
-  };
-
-  return fetch(`${config.apiUrl}/auth/refresh`, requestOptions)
-    .then(handleResponse)
+  let auth = JSON.parse(localStorage.getItem('auth'));
+  axios.defaults.headers.common['Authorization'] = authHeader()
+  return axios.post(`${config.apiUrl}/auth/refresh`, { refresh_token: auth.refresh_token })
+    .catch(handleResponse)
     .then(auth => {
-      localStorage.setItem('auth', JSON.stringify(auth));
+      localStorage.setItem('auth', JSON.stringify(auth.data.token));
 
       return auth;
     });
@@ -41,9 +35,8 @@ function refresh() {
 function logout() {
   let auth = JSON.parse(localStorage.getItem('auth'));
   axios.defaults.headers.common['Authorization'] = authHeader()
-  console.log();
-  return axios.post(`${config.apiUrl}/auth/logout`, { token: auth.token.access_token })
-    .then(handleResponse)
+  return axios.post(`${config.apiUrl}/auth/logout`, { token: auth.access_token })
+    .catch(handleResponse)
     .then(auth => {
       localStorage.removeItem('auth');
       window.location.reload(true);
@@ -51,7 +44,6 @@ function logout() {
 }
 
 function handleResponse(r) {
-  console.log(r)
   let auth = localStorage.getItem('auth');
   if (!r.statusText == 'OK') {
     if (r.response.status === 401) {
