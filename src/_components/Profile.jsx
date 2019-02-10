@@ -8,7 +8,6 @@ export class Profile extends Component {
   }
 
   render() {
-    console.log(this.props)
     const { title, data, page } = this.props;
     return (
       <div>

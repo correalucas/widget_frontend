@@ -12,6 +12,8 @@ import { MyProfilePage } from '../MyProfilePage';
 import { EditProfilePage } from '../EditProfilePage';
 import { UserProfilePage } from '../UserProfilePage';
 import { ChangePasswordPage } from '../ChangePasswordPage';
+import { NewWidgetPage } from '../NewWidgetPage';
+import { EditWidgetPage } from '../EditWidgetPage';
 
 class App extends Component {
   render() {
@@ -26,7 +28,9 @@ class App extends Component {
               <PrivateRoute exact path="/myprofile" component={MyProfilePage} />
               <PrivateRoute exact path="/editprofile" component={EditProfilePage} />
               <PrivateRoute exact path="/changepassword" component={ChangePasswordPage} />
-              <PrivateRoute path="/users/:userId" component={UserProfilePage} />
+              <PrivateRoute exact path="/newwidget" component={NewWidgetPage} />
+              <PrivateRoute exact path="/users/:userId" component={UserProfilePage} />
+              <PrivateRoute exact path="/widgets/:widgetId/edit" component={EditWidgetPage} />
             </div>
           </Router>
         </Container>
